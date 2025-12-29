@@ -11,6 +11,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+
 
 import java.util.*;
 
@@ -51,10 +54,15 @@ public class DimensionTravelEventHandler {
         if (recentWarnings.containsKey(uuid) && now - recentWarnings.get(uuid) <= WARNING_COOLDOWN_MS) return;
         recentWarnings.put(uuid, now);
 
+        if ("minecraft:the_end".equals(dimensionId)) {
+            serverPlayer.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 20 * 5, 0, false, false));
+        }
+
         String niceName = formatDimensionName(dimensionId);
         serverPlayer.sendSystemMessage(
                 Component.literal("§cYou cannot travel to §6" + niceName + " §cuntil you complete:")
         );
+
 
         for (String advId : missingAdvancements) {
             ResourceLocation id = ResourceLocation.parse(advId);
