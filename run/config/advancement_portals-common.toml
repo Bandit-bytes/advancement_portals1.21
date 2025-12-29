@@ -1,0 +1,2 @@
+#Advancement requirements for each dimension (format: dimension=[adv1,adv2,...])
+dimensionRequirements = ["minecraft:the_nether=[minecraft:story/enchant_item,minecraft:story/mine_diamond]", "minecraft:the_end=[minecraft:nether/obtain_ancient_debris]"]
